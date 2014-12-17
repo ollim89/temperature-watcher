@@ -37,7 +37,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>temperatureWatcher.Program</StartupObject>
+    <StartupObject>TemperatureWatcher.Service.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -93,6 +93,12 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TemperatureWatcher.Settings\TemperatureWatcher.Settings.csproj">
+      <Project>{37cfa8fd-becb-4222-9a40-550944080ecf}</Project>
+      <Name>TemperatureWatcher.Settings</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
