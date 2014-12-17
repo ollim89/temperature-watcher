@@ -5,7 +5,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 
-namespace temperatureWatcher
+namespace TemperatureWatcher.Service
 {
     [ServiceBehavior(InstanceContextMode=InstanceContextMode.Single)]
     public class TemperatureWatcherService : ITemperatureWatcherServiceContract

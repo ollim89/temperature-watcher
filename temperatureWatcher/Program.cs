@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace temperatureWatcher
+namespace TemperatureWatcher.Service
 {
     static class Program
     {

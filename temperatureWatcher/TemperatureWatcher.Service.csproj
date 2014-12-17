@@ -8,8 +8,8 @@
     <ProjectGuid>{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>temperatureWatcher</RootNamespace>
-    <AssemblyName>temperatureWatcher</AssemblyName>
+    <RootNamespace>TemperatureWatcher.Service</RootNamespace>
+    <AssemblyName>TemperatureWatcher.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

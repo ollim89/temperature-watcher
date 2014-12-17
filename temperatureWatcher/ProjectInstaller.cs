@@ -6,7 +6,7 @@ using System.Configuration.Install;
 using System.Linq;
 
 
-namespace temperatureWatcher
+namespace TemperatureWatcher.Service
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer

@@ -14,7 +14,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Threading;
 
-namespace temperatureWatcher
+namespace TemperatureWatcher.Service
 {
     public partial class TemperatureWatcher : ServiceBase
     {

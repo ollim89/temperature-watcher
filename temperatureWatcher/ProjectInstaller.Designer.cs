@@ -1,4 +1,4 @@
-﻿namespace temperatureWatcher
+﻿namespace TemperatureWatcher.Service
 {
     partial class ProjectInstaller
     {
