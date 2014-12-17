@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+  <timefile>
+    <method>file</method> <!-- http or file -->
+    <path>D:\Files\Development\Web\htdocs\motorvarmare\time.ini</path>
+    <readinterval>
+      <hours>0</hours>
+      <minutes>0</minutes>
+      <seconds>10</seconds>
+    </readinterval>
+  </timefile>
+  <temperature>
+    <method>http</method> <!-- http or file -->
+    <path>http://www.temperatur.nu/termo/kvissleby/temp.txt</path>
+    <readinterval>
+      <hours>0</hours>
+      <minutes>5</minutes>
+      <seconds>0</seconds>
+    </readinterval>
+  </temperature>
+  <startlevels>
+    <level temperature="10" hours="0" minutes="20" seconds="0"/>
+    <level temperature="0" hours="0" minutes="30" seconds="0" />
+    <level temperature="-5" hours="1" minutes="0" seconds="0" />
+    <level temperature="-10" hours="1" minutes="30" seconds="0" />
+  </startlevels>
+  <execution>
+    <executable>ping.exe</executable>
+    <flags>
+      <on>localhost</on>
+      <off>192.168.0.1</off>
+    </flags>
+    <delayShutdown>
+      <hours>0</hours>
+      <minutes>1</minutes>
+      <seconds>0</seconds>
+    </delayShutdown>
+  </execution>
+</settings>
