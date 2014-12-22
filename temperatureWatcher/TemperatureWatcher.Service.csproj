@@ -8,7 +8,7 @@
     <ProjectGuid>{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TemperatureWatcher.Service</RootNamespace>
+    <RootNamespace>TemperatureWatcher.Service.Settings</RootNamespace>
     <AssemblyName>TemperatureWatcher.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -41,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -54,50 +55,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WebService\ITemperatureWatcherServiceContract.cs" />
-    <Compile Include="ProjectInstaller.cs">
+    <Compile Include="Executor.cs" />
+    <Compile Include="TemperatureWatcherService.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ProjectInstaller.Designer.cs">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TemperatureWatcher.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TemperatureWatcher.Designer.cs">
-      <DependentUpon>TemperatureWatcher.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Settings\SettingsSchema.cs" />
-    <Compile Include="WebService\TemperatureWatcherService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="settings.xml">
+    <None Include="App.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ProjectInstaller.resx">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TemperatureWatcher.resx">
-      <DependentUpon>TemperatureWatcher.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="SettingsSchema.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TemperatureWatcher.Settings\TemperatureWatcher.Settings.csproj">
+    <ProjectReference Include="..\TemperatureWatcher.Processing\TemperatureWatcher.Workers.csproj">
+      <Project>{c3287049-5ef0-40f4-8f77-acaaa17e3318}</Project>
+      <Name>TemperatureWatcher.Workers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TemperatureWatcher.Settings\TemperatureWatcher.ConfigurationSection.csproj">
       <Project>{37cfa8fd-becb-4222-9a40-550944080ecf}</Project>
-      <Name>TemperatureWatcher.Settings</Name>
+      <Name>TemperatureWatcher.ConfigurationSection</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

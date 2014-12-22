@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TemperatureWatcher.Settings.General
+namespace TemperatureWatcher.ConfigurationSection.General
 {
     public class EnableDisableElement : ConfigurationElement
     {

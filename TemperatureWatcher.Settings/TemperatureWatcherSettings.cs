@@ -6,13 +6,14 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Configuration;
-using TemperatureWatcher.Settings.TimeToLeaveSection;
-using TemperatureWatcher.Settings.TemperatureSection;
-using TemperatureWatcher.Settings.StartLevelsSection;
+using TemperatureWatcher.ConfigurationSection.TimeToLeaveSection;
+using TemperatureWatcher.ConfigurationSection.TemperatureSection;
+using TemperatureWatcher.ConfigurationSection.StartLevelsSection;
+using TemperatureWatcher.ConfigurationSection.ExecutionSection;
 
-namespace TemperatureWatcher.Settings
+namespace TemperatureWatcher.ConfigurationSection
 {
-    public class SettingsSection : ConfigurationElement
+    public class TemperatureWatcherSettings : ConfigurationElement
     {
         [ConfigurationProperty("timeToLeaveSource")]
         public TimeToLeave TimeToLeave
@@ -50,6 +51,19 @@ namespace TemperatureWatcher.Settings
             set
             {
                 this["startLevels"] = value;
+            }
+        }
+
+        [ConfigurationProperty("execution")]
+        public Execution Execution
+        {
+            get
+            {
+                return (Execution)this["execution"];
+            }
+            set
+            {
+                this["execution"] = value;
             }
         }
     }

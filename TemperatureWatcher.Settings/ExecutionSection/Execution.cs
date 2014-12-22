@@ -4,12 +4,25 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TemperatureWatcher.Settings.General;
+using TemperatureWatcher.ConfigurationSection.General;
 
-namespace TemperatureWatcher.Settings.ExecutionSection
+namespace TemperatureWatcher.ConfigurationSection.ExecutionSection
 {
     public class Execution : ConfigurationElement
     {
+        [ConfigurationProperty("executable")]
+        public string Executable
+        {
+            get
+            {
+                return (Flags)this["executable"];
+            }
+            set
+            {
+                this["executable"] = value;
+            }
+        }
+
         [ConfigurationProperty("flags")]
         public Flags Flags
         {

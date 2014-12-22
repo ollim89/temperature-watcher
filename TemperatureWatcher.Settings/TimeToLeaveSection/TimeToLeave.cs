@@ -4,9 +4,9 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TemperatureWatcher.Settings.General;
+using TemperatureWatcher.ConfigurationSection.General;
 
-namespace TemperatureWatcher.Settings.TimeToLeaveSection
+namespace TemperatureWatcher.ConfigurationSection.TimeToLeaveSection
 {
     public class TimeToLeave : ConfigurationSection
     {
@@ -37,7 +37,7 @@ namespace TemperatureWatcher.Settings.TimeToLeaveSection
         }
 
         [ConfigurationProperty("webService")]
-        public WebService WebServiceSourc
+        public WebService WebServiceSource
         {
             get
             {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TemperatureWatcher.Settings.StartLevelsSection
+namespace TemperatureWatcher.ConfigurationSection.StartLevelsSection
 {
     public class StartLevel : ConfigurationElement
     {

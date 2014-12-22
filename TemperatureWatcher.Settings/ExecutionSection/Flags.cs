@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TemperatureWatcher.Settings.ExecutionSection
+namespace TemperatureWatcher.ConfigurationSection.ExecutionSection
 {
     public class Flags : ConfigurationElement
     {

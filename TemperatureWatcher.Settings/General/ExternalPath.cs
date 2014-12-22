@@ -4,10 +4,11 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TemperatureWatcher.ConfigurationSection.TimeToLeaveSection;
 
-namespace TemperatureWatcher.Settings.General
+namespace TemperatureWatcher.ConfigurationSection.General
 {
-    public class ExternalPath : EnableDisableElement
+    public class ExternalPath : EnableDisableElement, ITimeToLeave
     {
         [ConfigurationProperty("path")]
         public string Path 
@@ -19,6 +20,19 @@ namespace TemperatureWatcher.Settings.General
             set
             {
                 this["value"] = value;
+            }
+        }
+
+        [ConfigurationProperty("contentMask")]
+        public string ContentMask
+        {
+            get
+            {
+                return (string)this["contentMask"];
+            }
+            set
+            {
+                this["contentMask"] = value;
             }
         }
 

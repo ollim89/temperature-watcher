@@ -4,10 +4,10 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TemperatureWatcher.Settings.TimeToLeaveSection;
-using TemperatureWatcher.Settings.General;
+using TemperatureWatcher.ConfigurationSection.TimeToLeaveSection;
+using TemperatureWatcher.ConfigurationSection.General;
 
-namespace TemperatureWatcher.Settings.TemperatureSection
+namespace TemperatureWatcher.ConfigurationSection.TemperatureSection
 {
     public class Temperature : ConfigurationElement
     {

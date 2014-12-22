@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace TemperatureWatcher.Service
+namespace TemperatureWatcher.Service.Settings
 {
     static class Program
     {
@@ -20,7 +20,7 @@ namespace TemperatureWatcher.Service
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
 			{ 
-				new TemperatureWatcher() 
+				new TemperatureWatcherService() 
 			};
 
             //Show forms button to close service if run in interactive mode (for debugging)
