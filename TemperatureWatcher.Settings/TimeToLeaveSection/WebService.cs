@@ -8,7 +8,7 @@ using TemperatureWatcher.ConfigurationSection.General;
 
 namespace TemperatureWatcher.ConfigurationSection.TimeToLeaveSection
 {
-    public class WebService : EnableDisableElement, ITimeToLeave
+    public class WebService : EnableDisableElement
     {
 
     }

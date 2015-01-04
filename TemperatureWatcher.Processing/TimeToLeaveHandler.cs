@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TemperatureWatcher.ConfigurationSection.TimeToLeaveSection
+namespace TemperatureWatcher.Execution
 {
-    public interface ITimeToLeave
+    class TimeToLeaveHandler
     {
+
     }
 }

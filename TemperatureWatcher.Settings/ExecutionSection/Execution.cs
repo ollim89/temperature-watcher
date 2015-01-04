@@ -15,7 +15,7 @@ namespace TemperatureWatcher.ConfigurationSection.ExecutionSection
         {
             get
             {
-                return (Flags)this["executable"];
+                return (string)this["executable"];
             }
             set
             {

@@ -8,7 +8,7 @@ using TemperatureWatcher.ConfigurationSection.TimeToLeaveSection;
 
 namespace TemperatureWatcher.ConfigurationSection.General
 {
-    public class ExternalPath : EnableDisableElement, ITimeToLeave
+    public class ExternalPath : EnableDisableElement
     {
         [ConfigurationProperty("path")]
         public string Path 

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using TemperatureWatcher.ConfigurationSection.General;
-using TemperatureWatcher.Workers;
-using TemperatureWatcher.Workers.ExternalPath;
+using TemperatureWatcher.Execution;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 
@@ -13,17 +12,16 @@ namespace TemperatureWatcher.Service.Settings
 {
     class TemperatureWatcherService : ServiceBase
     {
-        Executor _executor;
-        public static string EventLogSource = "TemperatureWatcher";
-        public static string EventLogName = "Application";
+        TemperatureWatcherExecutor _executor;
 
         protected override void OnStart(string[] args)
         {
-            _executor = new Executor();
+            _executor = new TemperatureWatcherExecutor();
         }
 
         protected override void OnStop()
         {
+            _executor.StopExecutor();
         }
 
         #region Depracted

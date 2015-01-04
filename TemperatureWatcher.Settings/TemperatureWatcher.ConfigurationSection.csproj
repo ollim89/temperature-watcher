@@ -43,16 +43,15 @@
     <Compile Include="ExecutionSection\Execution.cs" />
     <Compile Include="ExecutionSection\Flags.cs" />
     <Compile Include="General\EnableDisableElement.cs" />
+    <Compile Include="Interfaces\IExternalPathElementContainer.cs" />
     <Compile Include="TemperatureWatcherSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartLevelsSection\StartLevel.cs" />
     <Compile Include="TemperatureSection\Temperature.cs" />
     <Compile Include="General\ExternalPath.cs" />
     <Compile Include="General\TimeInterval.cs" />
-    <Compile Include="TimeToLeaveSection\ITimeToLeave.cs" />
     <Compile Include="TimeToLeaveSection\WebService.cs" />
     <Compile Include="TimeToLeaveSection\TimeToLeave.cs" />
-    <Compile Include="TimeToLeaveSourceFactory.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

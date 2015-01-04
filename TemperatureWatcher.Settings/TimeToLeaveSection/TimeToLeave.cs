@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TemperatureWatcher.ConfigurationSection.General;
+using TemperatureWatcher.ConfigurationSection.Interfaces;
 
 namespace TemperatureWatcher.ConfigurationSection.TimeToLeaveSection
 {
-    public class TimeToLeave : ConfigurationSection
+    public class TimeToLeave : ConfigurationElement, IExternalPathElementContainer
     {
         [ConfigurationProperty("file")]
         public ExternalPath FileSource

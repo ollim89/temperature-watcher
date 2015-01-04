@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace TemperatureWatcher.Workers.ExternalPath
+namespace TemperatureWatcher.Execution.Workers
 {
     public class FileWorker : ExternalPathWorker
     {
@@ -16,7 +16,7 @@ namespace TemperatureWatcher.Workers.ExternalPath
 
         }
 
-        public override string RunProcessorToGetContent()
+        public override void GetContent(object sender, System.Timers.ElapsedEventArgs e)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace TemperatureWatcher.Workers.ExternalPath
                     fileContent = sr.ReadToEnd();
                 }
 
-                return GetSearchedContent(fileContent);
+                this.Content = GetSearchedContent(fileContent);
             }
             catch (IOException)
             {

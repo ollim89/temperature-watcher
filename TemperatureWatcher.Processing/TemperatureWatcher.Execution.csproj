@@ -7,7 +7,7 @@
     <ProjectGuid>{C3287049-5EF0-40F4-8F77-ACAAA17E3318}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TemperatureWatcher.Workers</RootNamespace>
+    <RootNamespace>TemperatureWatcher.Execution</RootNamespace>
     <AssemblyName>TemperatureWatcher.Workers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,11 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExternalPath\ExternalPathWorker.cs" />
-    <Compile Include="ExternalPath\FileWorker.cs" />
-    <Compile Include="ExternalPath\HttpWorker.cs" />
-    <Compile Include="Worker.cs" />
+    <Compile Include="ExecutableHandler.cs" />
+    <Compile Include="TemperatureWatcherExecutor.cs" />
+    <Compile Include="TimeToLeaveHandler.cs" />
+    <Compile Include="Workers\ExternalPathWorker.cs" />
+    <Compile Include="Workers\Factories\ExternalPathWorkerFactory.cs" />
+    <Compile Include="Workers\FileWorker.cs" />
+    <Compile Include="Workers\HttpWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TemperatureWatcher.Settings\TemperatureWatcher.ConfigurationSection.csproj">
+      <Project>{37cfa8fd-becb-4222-9a40-550944080ecf}</Project>
+      <Name>TemperatureWatcher.ConfigurationSection</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

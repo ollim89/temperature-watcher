@@ -5,8 +5,9 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 
-namespace TemperatureWatcher.Workers.ExternalPath
+namespace TemperatureWatcher.Execution.Workers
 {
     public class HttpWorker : ExternalPathWorker
     {
@@ -16,29 +17,19 @@ namespace TemperatureWatcher.Workers.ExternalPath
 
         }
 
-        private string GetContent()
+        public override void GetContent(object sender, ElapsedEventArgs e)
         {
             try
             {
                 WebClient client = new WebClient();
                 string content = client.DownloadString(_path);
 
-                return GetSearchedContent(content);
+                this.Content = GetSearchedContent(content);
             }
             catch (WebException)
             {
                 throw;
             }
-        }
-
-        public override void RunWorker()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void StopWorker()
-        {
-            throw new NotImplementedException();
         }
     }
 }

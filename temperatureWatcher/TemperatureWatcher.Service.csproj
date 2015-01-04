@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Executor.cs" />
     <Compile Include="TemperatureWatcherService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -68,9 +67,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TemperatureWatcher.Processing\TemperatureWatcher.Workers.csproj">
+    <ProjectReference Include="..\TemperatureWatcher.Processing\TemperatureWatcher.Execution.csproj">
       <Project>{c3287049-5ef0-40f4-8f77-acaaa17e3318}</Project>
-      <Name>TemperatureWatcher.Workers</Name>
+      <Name>TemperatureWatcher.Execution</Name>
     </ProjectReference>
     <ProjectReference Include="..\TemperatureWatcher.Settings\TemperatureWatcher.ConfigurationSection.csproj">
       <Project>{37cfa8fd-becb-4222-9a40-550944080ecf}</Project>
