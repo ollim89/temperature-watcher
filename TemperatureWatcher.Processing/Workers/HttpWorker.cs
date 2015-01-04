@@ -14,7 +14,7 @@ namespace TemperatureWatcher.Execution.Workers
         public HttpWorker(string Path, string ContentMask, int hours, int minutes, int seconds)
             : base(Path, ContentMask, hours, minutes, seconds)
         {
-
+            _timer.AutoReset = false;
         }
 
         public override void GetContent(object sender, ElapsedEventArgs e)
@@ -30,6 +30,8 @@ namespace TemperatureWatcher.Execution.Workers
             {
                 throw;
             }
+
+            _timer.Start();
         }
     }
 }

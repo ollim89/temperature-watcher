@@ -50,6 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TemperatureWatcher.Common\TemperatureWatcher.Common.csproj">
+      <Project>{0370ca0f-7341-41ca-ae57-78e6916c7af2}</Project>
+      <Name>TemperatureWatcher.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TemperatureWatcher.Settings\TemperatureWatcher.ConfigurationSection.csproj">
       <Project>{37cfa8fd-becb-4222-9a40-550944080ecf}</Project>
       <Name>TemperatureWatcher.ConfigurationSection</Name>

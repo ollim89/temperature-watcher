@@ -23,7 +23,7 @@ namespace TemperatureWatcher.ConfigurationSection.StartLevelsSection
         }
 
         [ConfigurationProperty("hours")]
-        public int hours
+        public int Hours
         {
             get
             {
@@ -36,7 +36,7 @@ namespace TemperatureWatcher.ConfigurationSection.StartLevelsSection
         }
 
         [ConfigurationProperty("minutes")]
-        public int minutes
+        public int Minutes
         {
             get
             {
@@ -49,7 +49,7 @@ namespace TemperatureWatcher.ConfigurationSection.StartLevelsSection
         }
 
         [ConfigurationProperty("seconds")]
-        public int seconds
+        public int Seconds
         {
             get
             {

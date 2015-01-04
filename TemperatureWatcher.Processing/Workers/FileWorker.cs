@@ -13,7 +13,7 @@ namespace TemperatureWatcher.Execution.Workers
         public FileWorker(string Path, string ContentMask, int hours, int minutes, int seconds)
             : base(Path, ContentMask, hours, minutes, seconds)
         {
-
+            _timer.AutoReset = false;
         }
 
         public override void GetContent(object sender, System.Timers.ElapsedEventArgs e)
@@ -32,6 +32,8 @@ namespace TemperatureWatcher.Execution.Workers
             {
                 throw;
             }
+
+            _timer.Start();
         }
     }
 }

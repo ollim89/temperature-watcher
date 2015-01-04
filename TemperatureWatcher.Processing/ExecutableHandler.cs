@@ -4,43 +4,54 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TemperatureWatcher.Common;
+using TemperatureWatcher.ConfigurationSection.ExecutionSection;
 
 namespace TemperatureWatcher.Execution
 {
     class ExecutableHandler
     {
-        public static void RunExecutable(bool onFlags)
+        private TemperatureWatcher.ConfigurationSection.ExecutionSection.Execution _settings;
+
+        public bool IsExecuting { get; set; }
+
+        public ExecutableHandler(TemperatureWatcher.ConfigurationSection.ExecutionSection.Execution settings)
+        {
+            _settings = settings;
+            IsExecuting = false;
+        }
+
+        public void RunExecutable(bool onFlags)
         {
             string flags;
             if (onFlags)
             {
-                flags = TemperatureWatcherExecutor.Settings.Execution.Flags.On;
+                flags = _settings.Flags.On;
             }
             else
             {
-                flags = TemperatureWatcherExecutor.Settings.Execution.Flags.Off;
+                flags = _settings.Flags.Off;
             }
 
             Process process = null;
 
             try
             {
-                process = Process.Start(TemperatureWatcherExecutor.Settings.Execution.Executable, flags);
+                process = Process.Start(_settings.Executable, flags);
+
+                if(onFlags)
+                {
+                    IsExecuting = true;
+                }
+                else
+                {
+                    IsExecuting = false;
+                }
             }
             catch (Exception e)
             {
-                EventLog.WriteEntry(TemperatureWatcherExecutor.EventLogSource, "Process could not be started, error: " + e.ToString(), EventLogEntryType.Error);
+                Logger.WriteEntry("Process could not be started, error: " + e.ToString(), EventLogEntryType.Error);
                 throw;
-            }
-
-            if (process != null)
-            {
-                //Write log to eventlog
-                EventLog.WriteEntry(TemperatureWatcherExecutor.EventLogSource, "Executable On-flags sent, warmer will be on until: " + offTime.ToString(), EventLogEntryType.Information);
-            }
-            else
-            {
-                EventLog.WriteEntry(TemperatureWatcherExecutor.EventLogSource, "Process could not be started", EventLogEntryType.Error);
             }
         }
     }

@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using TemperatureWatcher.ConfigurationSection.General;
 using TemperatureWatcher.Execution;
 using System.ServiceProcess;
-using System.Threading.Tasks;
+using TemperatureWatcher.WebApi;
+using TemperatureWatcher.ConfigurationSection;
+using TemperatureWatcher.Common;
 
-namespace TemperatureWatcher.Service.Settings
+namespace TemperatureWatcher.Service
 {
     class TemperatureWatcherService : ServiceBase
     {
+        TemperatureWatcherSettings _settings; 
         TemperatureWatcherExecutor _executor;
+        TemperatureWatcherWebApi _webApi;
 
         protected override void OnStart(string[] args)
         {
-            _executor = new TemperatureWatcherExecutor();
+            _settings = new TemperatureWatcherSettings();
+            _executor = new TemperatureWatcherExecutor(_settings);
+            _webApi = new TemperatureWatcherWebApi(_settings, _executor.ReceiveWebApiCall);
         }
 
         protected override void OnStop()

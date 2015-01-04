@@ -67,6 +67,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TemperatureWatcher.Common\TemperatureWatcher.Common.csproj">
+      <Project>{0370ca0f-7341-41ca-ae57-78e6916c7af2}</Project>
+      <Name>TemperatureWatcher.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TemperatureWatcher.Processing\TemperatureWatcher.Execution.csproj">
       <Project>{c3287049-5ef0-40f4-8f77-acaaa17e3318}</Project>
       <Name>TemperatureWatcher.Execution</Name>
@@ -74,6 +78,10 @@
     <ProjectReference Include="..\TemperatureWatcher.Settings\TemperatureWatcher.ConfigurationSection.csproj">
       <Project>{37cfa8fd-becb-4222-9a40-550944080ecf}</Project>
       <Name>TemperatureWatcher.ConfigurationSection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TemperatureWatcher.WebApi\TemperatureWatcher.WebApi.csproj">
+      <Project>{aed910ff-6588-4996-93a6-805fef80a1b3}</Project>
+      <Name>TemperatureWatcher.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

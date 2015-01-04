@@ -52,6 +52,7 @@
     <Compile Include="General\TimeInterval.cs" />
     <Compile Include="TimeToLeaveSection\WebService.cs" />
     <Compile Include="TimeToLeaveSection\TimeToLeave.cs" />
+    <Compile Include="WebApiSection\WebApi.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

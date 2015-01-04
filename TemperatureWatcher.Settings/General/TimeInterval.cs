@@ -10,7 +10,7 @@ namespace TemperatureWatcher.ConfigurationSection.General
     public class TimeInterval : ConfigurationElement
     {
         [ConfigurationProperty("hours")]
-        public int hours 
+        public int Hours 
         {
             get
             {
@@ -23,7 +23,7 @@ namespace TemperatureWatcher.ConfigurationSection.General
         }
 
         [ConfigurationProperty("minutes")]
-        public int minutes
+        public int Minutes
         {
             get
             {
@@ -36,7 +36,7 @@ namespace TemperatureWatcher.ConfigurationSection.General
         }
 
         [ConfigurationProperty("seconds")]
-        public int seconds
+        public int Seconds
         {
             get
             {

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Configur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Execution", "TemperatureWatcher.Processing\TemperatureWatcher.Execution.csproj", "{C3287049-5EF0-40F4-8F77-ACAAA17E3318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.WebApi", "TemperatureWatcher.WebApi\TemperatureWatcher.WebApi.csproj", "{AED910FF-6588-4996-93A6-805FEF80A1B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Common", "TemperatureWatcher.Common\TemperatureWatcher.Common.csproj", "{0370CA0F-7341-41CA-AE57-78E6916C7AF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,26 @@ Global
 		{C3287049-5EF0-40F4-8F77-ACAAA17E3318}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C3287049-5EF0-40F4-8F77-ACAAA17E3318}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C3287049-5EF0-40F4-8F77-ACAAA17E3318}.Release|x86.ActiveCfg = Release|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AED910FF-6588-4996-93A6-805FEF80A1B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

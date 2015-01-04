@@ -16,18 +16,18 @@ namespace TemperatureWatcher.Execution.Workers.Factories
                 return new FileWorker(
                     externalPathElement.FileSource.Path,
                     externalPathElement.FileSource.ContentMask,
-                    externalPathElement.FileSource.ReadInterval.hours,
-                    externalPathElement.FileSource.ReadInterval.minutes,
-                    externalPathElement.FileSource.ReadInterval.seconds);
+                    externalPathElement.FileSource.ReadInterval.Hours,
+                    externalPathElement.FileSource.ReadInterval.Minutes,
+                    externalPathElement.FileSource.ReadInterval.Seconds);
             }
             else if (externalPathElement.HttpSource != null)
             {
                 return new HttpWorker(
                     externalPathElement.HttpSource.Path,
                     externalPathElement.HttpSource.ContentMask,
-                    externalPathElement.HttpSource.ReadInterval.hours,
-                    externalPathElement.HttpSource.ReadInterval.minutes,
-                    externalPathElement.HttpSource.ReadInterval.seconds);
+                    externalPathElement.HttpSource.ReadInterval.Hours,
+                    externalPathElement.HttpSource.ReadInterval.Minutes,
+                    externalPathElement.HttpSource.ReadInterval.Seconds);
             }
             else
             {

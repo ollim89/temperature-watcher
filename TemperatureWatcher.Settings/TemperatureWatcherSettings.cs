@@ -10,6 +10,7 @@ using TemperatureWatcher.ConfigurationSection.TimeToLeaveSection;
 using TemperatureWatcher.ConfigurationSection.TemperatureSection;
 using TemperatureWatcher.ConfigurationSection.StartLevelsSection;
 using TemperatureWatcher.ConfigurationSection.ExecutionSection;
+using TemperatureWatcher.ConfigurationSection.WebApiSection;
 
 namespace TemperatureWatcher.ConfigurationSection
 {
@@ -64,6 +65,19 @@ namespace TemperatureWatcher.ConfigurationSection
             set
             {
                 this["execution"] = value;
+            }
+        }
+
+        [ConfigurationProperty("webApi")]
+        public WebApi WebApi
+        {
+            get
+            {
+                return (WebApi)this["webApi"];
+            }
+            set
+            {
+                this["webApi"] = value;
             }
         }
     }
