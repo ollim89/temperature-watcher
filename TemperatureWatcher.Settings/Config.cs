@@ -14,7 +14,7 @@ using TemperatureWatcher.ConfigurationSection.WebApiSection;
 
 namespace TemperatureWatcher.ConfigurationSection
 {
-    public class TemperatureWatcherSettings : ConfigurationElement
+    public class Config : ConfigurationElement
     {
         [ConfigurationProperty("timeToLeaveSource")]
         public TimeToLeave TimeToLeave

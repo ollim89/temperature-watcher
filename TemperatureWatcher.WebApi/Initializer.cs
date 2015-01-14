@@ -9,11 +9,11 @@ using TemperatureWatcher.ConfigurationSection;
 
 namespace TemperatureWatcher.WebApi
 {
-    public class TemperatureWatcherWebApi
+    public class Initializer
     {
-        private TemperatureWatcherSettings _settings;
+        private Config _settings;
 
-        public TemperatureWatcherWebApi(TemperatureWatcherSettings settings, Func<IWebApiEvent, IWebApiResponse> callback)
+        public Initializer(Config settings, Func<IWebApiEvent, IWebApiResponse> callback)
         {
             ApiControllerBase.TemperatureWatcherExecutorCallback = callback;
             _settings = settings;

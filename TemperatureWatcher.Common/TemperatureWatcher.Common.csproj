@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,9 +44,11 @@
     <Compile Include="IWebApiResponse.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApiEventTypes\GetCurrentTemperatureEvent.cs" />
     <Compile Include="WebApiEventTypes\GetExecutingStateEvent.cs" />
     <Compile Include="WebApiEventTypes\SetLeaveTimeEvent.cs" />
     <Compile Include="WebApiEventTypes\StartExecutableEvent.cs" />
+    <Compile Include="WebApiResponseTypes\GetCurrentTemperatureResponse.cs" />
     <Compile Include="WebApiResponseTypes\GetExecutingStateResponse.cs" />
   </ItemGroup>
   <ItemGroup />

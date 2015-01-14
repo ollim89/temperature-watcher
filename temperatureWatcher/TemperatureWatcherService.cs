@@ -13,15 +13,15 @@ namespace TemperatureWatcher.Service
 {
     class TemperatureWatcherService : ServiceBase
     {
-        TemperatureWatcherSettings _settings; 
-        TemperatureWatcherExecutor _executor;
-        TemperatureWatcherWebApi _webApi;
+        Config _settings; 
+        Executor _executor;
+        Initializer _webApi;
 
         protected override void OnStart(string[] args)
         {
-            _settings = new TemperatureWatcherSettings();
-            _executor = new TemperatureWatcherExecutor(_settings);
-            _webApi = new TemperatureWatcherWebApi(_settings, _executor.ReceiveWebApiCall);
+            _settings = new Config();
+            _executor = new Executor(_settings);
+            _webApi = new Initializer(_settings, _executor.ReceiveWebApiCall);
         }
 
         protected override void OnStop()

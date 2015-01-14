@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using TemperatureWatcher.Common;
 using TemperatureWatcher.ConfigurationSection.ExecutionSection;
 
@@ -12,19 +13,39 @@ namespace TemperatureWatcher.Execution
     class ExecutableHandler
     {
         private TemperatureWatcher.ConfigurationSection.ExecutionSection.Execution _settings;
+        private Timer _executableEndTimer;
 
         public bool IsExecuting { get; set; }
 
-        public ExecutableHandler(TemperatureWatcher.ConfigurationSection.ExecutionSection.Execution settings)
+        public ExecutableHandler(TemperatureWatcher.ConfigurationSection.ExecutionSection.Execution settings, ElapsedEventHandler executableEndTimerHandler)
         {
             _settings = settings;
             IsExecuting = false;
+
+            _executableEndTimer = new Timer();
+            _executableEndTimer.AutoReset = false;
+            _executableEndTimer.Elapsed += executableEndTimerHandler;
         }
 
-        public void RunExecutable(bool onFlags)
+        public void TurnOnExecutable(DateTime onUntil)
+        {
+            RunExecutable(true, onUntil);
+        }
+
+        public void TurnOnExecutable()
+        {
+            RunExecutable(true);
+        }
+
+        public void TurnOffExecutable()
+        {
+            RunExecutable(false);
+        }
+
+        private void RunExecutable(bool turnOn, DateTime? onUntil = null)
         {
             string flags;
-            if (onFlags)
+            if (turnOn)
             {
                 flags = _settings.Flags.On;
             }
@@ -39,8 +60,19 @@ namespace TemperatureWatcher.Execution
             {
                 process = Process.Start(_settings.Executable, flags);
 
-                if(onFlags)
+                if(turnOn)
                 {
+                    if (onUntil.HasValue)
+                    {
+                        onUntil.Value.AddHours(_settings.DelayShutdown.Hours);
+                        onUntil.Value.AddMinutes(_settings.DelayShutdown.Minutes);
+                        onUntil.Value.AddSeconds(_settings.DelayShutdown.Seconds);
+
+                        _executableEndTimer.Interval = (onUntil.Value - DateTime.Now).Milliseconds;
+
+                        _executableEndTimer.Start();
+                    }
+
                     IsExecuting = true;
                 }
                 else

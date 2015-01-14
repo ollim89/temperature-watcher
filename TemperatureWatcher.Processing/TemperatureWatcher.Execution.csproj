@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExecutableHandler.cs" />
-    <Compile Include="TemperatureWatcherExecutor.cs" />
-    <Compile Include="TimeToLeaveHandler.cs" />
+    <Compile Include="Executor.cs" />
+    <Compile Include="ScheduleHandler.cs" />
     <Compile Include="Workers\ExternalPathWorker.cs" />
     <Compile Include="Workers\Factories\ExternalPathWorkerFactory.cs" />
     <Compile Include="Workers\FileWorker.cs" />

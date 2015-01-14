@@ -9,22 +9,24 @@ using System.Timers;
 
 namespace TemperatureWatcher.Execution.Workers
 {
-    public class HttpWorker : ExternalPathWorker
+    public class HttpWorker<T> : ExternalPathWorker<T>
     {
-        public HttpWorker(string Path, string ContentMask, int hours, int minutes, int seconds)
-            : base(Path, ContentMask, hours, minutes, seconds)
+        public HttpWorker(string Path, string ContentMask, int hours, int minutes, int seconds, Action<T, DateTime> onUpdateCallback)
+            : base(Path, ContentMask, hours, minutes, seconds, onUpdateCallback)
         {
             _timer.AutoReset = false;
         }
 
-        public override void GetContent(object sender, ElapsedEventArgs e)
+        public override T GetContent(DateTime timeExecuted)
         {
+            T content;
+
             try
             {
                 WebClient client = new WebClient();
-                string content = client.DownloadString(_path);
+                content = ConvertContent(GetSearchedContent(client.DownloadString(_path)));
 
-                this.Content = GetSearchedContent(content);
+                CallOnUpdateCallbackIfValueChanged(content, timeExecuted);
             }
             catch (WebException)
             {
@@ -32,6 +34,8 @@ namespace TemperatureWatcher.Execution.Workers
             }
 
             _timer.Start();
+
+            return content;
         }
     }
 }

@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace TemperatureWatcher.Execution.Workers
 {
-    public class FileWorker : ExternalPathWorker
+    public class FileWorker<T> : ExternalPathWorker<T>
     {
-        public FileWorker(string Path, string ContentMask, int hours, int minutes, int seconds)
-            : base(Path, ContentMask, hours, minutes, seconds)
+        public FileWorker(string Path, string ContentMask, int hours, int minutes, int seconds, Action<T, DateTime> onUpdateCallback)
+            : base(Path, ContentMask, hours, minutes, seconds, onUpdateCallback)
         {
             _timer.AutoReset = false;
         }
 
-        public override void GetContent(object sender, System.Timers.ElapsedEventArgs e)
+        public override T GetContent(DateTime timeExecuted)
         {
+            T content;
             try
             {
                 string fileContent = null;
@@ -26,7 +27,8 @@ namespace TemperatureWatcher.Execution.Workers
                     fileContent = sr.ReadToEnd();
                 }
 
-                this.Content = GetSearchedContent(fileContent);
+                content = ConvertContent(GetSearchedContent(fileContent));
+                CallOnUpdateCallbackIfValueChanged(content, timeExecuted);
             }
             catch (IOException)
             {
@@ -34,6 +36,8 @@ namespace TemperatureWatcher.Execution.Workers
             }
 
             _timer.Start();
+
+            return content;
         }
     }
 }

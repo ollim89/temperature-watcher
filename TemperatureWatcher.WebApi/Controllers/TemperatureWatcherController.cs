@@ -22,10 +22,17 @@ namespace TemperatureWatcher.WebApi.Controllers
             return isExecuting;
         }
 
-        public void SetLeaveTime(int hour, int minute, bool activeState)
+        public void SetSchedule(int hour, int minute, bool activeState)
         {
-            SetLeaveTimeEvent leaveTimeEvent = new SetLeaveTimeEvent(hour, minute, activeState);
-            TemperatureWatcherExecutorCallback(leaveTimeEvent);
+            SetScheduleEvent scheduleEvent = new SetScheduleEvent(hour, minute, activeState);
+            TemperatureWatcherExecutorCallback(scheduleEvent);
+        }
+
+        public object GetCurrentTemperature()
+        {
+            GetCurrentTemperatureEvent getCurrentTemperatureEvent = new GetCurrentTemperatureEvent();
+            GetCurrentTemperatureResponse response = (GetCurrentTemperatureResponse)TemperatureWatcherExecutorCallback(getCurrentTemperatureEvent);
+            return Json(response);
         }
     }
 }

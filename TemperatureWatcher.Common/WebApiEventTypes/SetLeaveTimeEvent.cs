@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TemperatureWatcher.Common.WebApiEventTypes
 {
-    public class SetLeaveTimeEvent : IWebApiEvent
+    public class SetScheduleEvent : IWebApiEvent
     {
-        public SetLeaveTimeEvent(int hour, int minute, bool isActive)
+        public SetScheduleEvent(int hour, int minute, bool isActive)
         {
             Hour = hour;
             Minute = minute;
