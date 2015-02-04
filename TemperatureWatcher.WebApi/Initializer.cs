@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TemperatureWatcher.Common;
-using TemperatureWatcher.ConfigurationSection;
+using TemperatureWatcher.Configuration;
 
 namespace TemperatureWatcher.WebApi
 {

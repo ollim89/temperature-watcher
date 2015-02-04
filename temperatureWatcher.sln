@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Service", "temperatureWatcher\TemperatureWatcher.Service.csproj", "{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Service", "TemperatureWatcher.Service\TemperatureWatcher.Service.csproj", "{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "TemperatureWatcherWIXSetup", "TemperatureWatcherWIXSetup\TemperatureWatcherWIXSetup.wixproj", "{2A60DC45-74B4-4A30-B806-5215122E78DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.ConfigurationSection", "TemperatureWatcher.Settings\TemperatureWatcher.ConfigurationSection.csproj", "{37CFA8FD-BECB-4222-9A40-550944080ECF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Configuration", "TemperatureWatcher.Configuration\TemperatureWatcher.Configuration.csproj", "{37CFA8FD-BECB-4222-9A40-550944080ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Execution", "TemperatureWatcher.Processing\TemperatureWatcher.Execution.csproj", "{C3287049-5EF0-40F4-8F77-ACAAA17E3318}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Execution", "TemperatureWatcher.Execution\TemperatureWatcher.Execution.csproj", "{C3287049-5EF0-40F4-8F77-ACAAA17E3318}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.WebApi", "TemperatureWatcher.WebApi\TemperatureWatcher.WebApi.csproj", "{AED910FF-6588-4996-93A6-805FEF80A1B3}"
 EndProject
