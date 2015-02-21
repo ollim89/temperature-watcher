@@ -37,15 +37,15 @@ namespace TemperatureWatcher.Execution
             _executableHandler = new ExecutableHandler(Settings.Execution, OnExecutableEndTime);
             _scheduleHandler = new ScheduleHandler(settings.StartLevels, OnScheduledExecutionTime);
             
-            //Set worker to get current temperature according to settings
-            _currentTemperatureWorker = ExternalPathWorkerFactory.CreateExternalPathWorker<float>(Settings.Temperature, OnCurrentTemperatureUpdate);
-            _currentTemperatureWorker.StartWorker();
-
             if (Settings.TimeToLeave.HttpSource != null || Settings.TimeToLeave.FileSource != null)
             {
                 _scheduleWorker = ExternalPathWorkerFactory.CreateExternalPathWorker<string>(Settings.TimeToLeave, OnScheduleUpdate);
                 _scheduleWorker.StartWorker();
             }
+
+            //Set worker to get current temperature according to settings
+            _currentTemperatureWorker = ExternalPathWorkerFactory.CreateExternalPathWorker<float>(Settings.Temperature, OnCurrentTemperatureUpdate);
+            _currentTemperatureWorker.StartWorker();
         }
         #endregion
 
@@ -76,9 +76,18 @@ namespace TemperatureWatcher.Execution
                 }
             }
             //Instant run of executable
-            else if(typeof(StartExecutableEvent) == request.GetType())
+            else if(typeof(ControlExecutableEvent) == request.GetType())
             {
-                _executableHandler.TurnOnExecutable();
+                ControlExecutableEvent controlExecutableEvent = (ControlExecutableEvent)request;
+
+                if (controlExecutableEvent.SendOnFlags)
+                {
+                    _executableHandler.TurnOnExecutable();
+                }
+                else
+                {
+                    _executableHandler.TurnOffExecutable();
+                }
             }
             //Get the current temperature
             else if(typeof(GetCurrentTemperatureEvent) == request.GetType())

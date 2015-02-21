@@ -13,7 +13,9 @@ namespace TemperatureWatcher.Execution
     {
         private StartLevel[] _startLevels;
         private int _hour;
+        private bool _hourIsSet;
         private int _minute;
+        private bool _minuteIsSet;
         private DateTime _scheduleUpdated;
         private Timer _timer;
         private float _currentTemperature;
@@ -29,6 +31,7 @@ namespace TemperatureWatcher.Execution
             set
             {
                 _currentTemperature = value;
+                _currentTemperatureUpdated = DateTime.Now;
             }
         }
 
@@ -47,6 +50,11 @@ namespace TemperatureWatcher.Execution
 
         public ScheduleHandler(StartLevelCollection startLevelCollection, ElapsedEventHandler scheduleTimerElapsedHandler)
         {
+            //Initialize values
+            _hourIsSet = false;
+            _minuteIsSet = false;
+            _currentTemperatureUpdated = DateTime.MinValue;
+
             StartLevel[] startLevels = new StartLevel[startLevelCollection.Count];
             for(int i = 0; i < startLevelCollection.Count; i++)
             {
@@ -63,7 +71,10 @@ namespace TemperatureWatcher.Execution
         public void UpdateSchedule(int hour, int minute, DateTime scheduleUpdated)
         {
             _hour = hour;
+            _hourIsSet = true;
             _minute = minute;
+            _minuteIsSet = true;
+
             _scheduleUpdated = scheduleUpdated;
 
             ResetTimer();
@@ -79,10 +90,10 @@ namespace TemperatureWatcher.Execution
 
         public void ResetTimer()
         {
-            if(_currentTemperature != null && _hour != null && _minute != null)
+            if(_currentTemperatureUpdated > DateTime.MinValue && _hourIsSet && _minuteIsSet)
             {
                 _timer.Stop();
-                _timer.Interval = GetTimeLeftToStartLevel().Milliseconds;
+                _timer.Interval = GetTimeLeftToStartLevel().TotalMilliseconds;
                 _timer.Start();
             }
         }

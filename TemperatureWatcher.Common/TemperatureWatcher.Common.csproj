@@ -47,7 +47,7 @@
     <Compile Include="WebApiEventTypes\GetCurrentTemperatureEvent.cs" />
     <Compile Include="WebApiEventTypes\GetExecutingStateEvent.cs" />
     <Compile Include="WebApiEventTypes\SetLeaveTimeEvent.cs" />
-    <Compile Include="WebApiEventTypes\StartExecutableEvent.cs" />
+    <Compile Include="WebApiEventTypes\ControlExecutableEvent.cs" />
     <Compile Include="WebApiResponseTypes\GetCurrentTemperatureResponse.cs" />
     <Compile Include="WebApiResponseTypes\GetExecutingStateResponse.cs" />
   </ItemGroup>

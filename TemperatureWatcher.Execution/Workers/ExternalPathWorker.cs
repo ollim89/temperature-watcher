@@ -51,7 +51,7 @@ namespace TemperatureWatcher.Execution.Workers
 
         protected void CallOnUpdateCallbackIfValueChanged(T content, DateTime contentUpdated)
         {
-            if(Nullable.GetUnderlyingType(_content.GetType()) == null || !_content.Equals(content))
+            if(_content == null || !_content.Equals(content))
             {
                 _onUpdateCallback(content, contentUpdated);
             }
