@@ -14,13 +14,26 @@ namespace TemperatureWatcher.Execution
     {
         private TemperatureWatcher.Configuration.ExecutionSection.Execution _settings;
         private Timer _executableEndTimer;
+        private readonly object _locker = new object();
+        private bool _isExecuting;
 
-        public bool IsExecuting { get; set; }
+        #region Properties
+        public bool IsExecuting
+        {
+            get
+            {
+                lock(_locker)
+                {
+                    return _isExecuting;
+                }
+            }
+        }
+        #endregion
 
         public ExecutableHandler(TemperatureWatcher.Configuration.ExecutionSection.Execution settings, ElapsedEventHandler executableEndTimerHandler)
         {
             _settings = settings;
-            IsExecuting = false;
+            _isExecuting = false;
 
             _executableEndTimer = new Timer();
             _executableEndTimer.AutoReset = false;
@@ -29,17 +42,26 @@ namespace TemperatureWatcher.Execution
 
         public void TurnOnExecutable(DateTime onUntil)
         {
-            RunExecutable(true, onUntil);
+            lock(_locker)
+            {
+                RunExecutable(true, onUntil);
+            }
         }
 
         public void TurnOnExecutable()
         {
-            RunExecutable(true);
+            lock (_locker)
+            {
+                RunExecutable(true);
+            }
         }
 
         public void TurnOffExecutable()
         {
-            RunExecutable(false);
+            lock (_locker)
+            {
+                RunExecutable(false);
+            }
         }
 
         private void RunExecutable(bool turnOn, DateTime? onUntil = null)
@@ -64,20 +86,20 @@ namespace TemperatureWatcher.Execution
                 {
                     if (onUntil.HasValue)
                     {
-                        onUntil.Value.AddHours(_settings.DelayShutdown.Hours);
-                        onUntil.Value.AddMinutes(_settings.DelayShutdown.Minutes);
-                        onUntil.Value.AddSeconds(_settings.DelayShutdown.Seconds);
+                        onUntil = onUntil.Value.AddHours(_settings.DelayShutdown.Hours);
+                        onUntil = onUntil.Value.AddMinutes(_settings.DelayShutdown.Minutes);
+                        onUntil = onUntil.Value.AddSeconds(_settings.DelayShutdown.Seconds);
 
-                        _executableEndTimer.Interval = (onUntil.Value - DateTime.Now).Milliseconds;
+                        _executableEndTimer.Interval = (onUntil.Value - DateTime.Now).TotalMilliseconds;
 
                         _executableEndTimer.Start();
                     }
 
-                    IsExecuting = true;
+                    _isExecuting = true;
                 }
                 else
                 {
-                    IsExecuting = false;
+                    _isExecuting = false;
                 }
             }
             catch (Exception e)

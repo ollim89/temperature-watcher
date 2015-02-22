@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Timers;
@@ -22,6 +23,7 @@ namespace TemperatureWatcher.Execution
         private ExternalPathWorker<string> _scheduleWorker;
         private ScheduleHandler _scheduleHandler;
         private ExecutableHandler _executableHandler;
+        private object _locker = new object();
         #endregion
 
         #region Properties
@@ -74,6 +76,18 @@ namespace TemperatureWatcher.Execution
                 {
                     _scheduleHandler.Inactivate();
                 }
+
+                lock (_locker)
+                {
+                    //Update the file source if using file
+                    if (Settings.TimeToLeave.FileSource.Enabled)
+                    {
+                        using (StreamWriter sw = new StreamWriter(Executor.Settings.TimeToLeave.FileSource.Path, false))
+                        {
+                            sw.WriteLine(string.Format("{0}:{1};{2}", scheduleEvent.Hour, scheduleEvent.Minute, scheduleEvent.IsActive.ToString().ToLower()));
+                        }
+                    }
+                }
             }
             //Instant run of executable
             else if(typeof(ControlExecutableEvent) == request.GetType())
@@ -82,11 +96,20 @@ namespace TemperatureWatcher.Execution
 
                 if (controlExecutableEvent.SendOnFlags)
                 {
-                    _executableHandler.TurnOnExecutable();
+                    if (controlExecutableEvent.MinutesToKeepRunning > 0)
+                    {
+                        _executableHandler.TurnOnExecutable(
+                            DateTime.Now.AddMinutes(controlExecutableEvent.MinutesToKeepRunning));
+                    }
+                    else
+                    {
+                        _executableHandler.TurnOnExecutable();
+                    }
                 }
                 else
                 {
                     _executableHandler.TurnOffExecutable();
+                    _scheduleHandler.ResetTimer();
                 }
             }
             //Get the current temperature
@@ -139,10 +162,6 @@ namespace TemperatureWatcher.Execution
             if (!_executableHandler.IsExecuting)
             {
                 _executableHandler.TurnOnExecutable(_scheduleHandler.GetNextScheduledTime());
-            }
-            else
-            {
-                _scheduleHandler.ResetTimer();
             }
         }
 

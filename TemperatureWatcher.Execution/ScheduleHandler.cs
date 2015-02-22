@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace TemperatureWatcher.Execution
 {
     class ScheduleHandler
     {
+        private static object _locker = new object();
         private StartLevel[] _startLevels;
         private int _hour;
         private bool _hourIsSet;
@@ -26,12 +28,18 @@ namespace TemperatureWatcher.Execution
         {
             get
             {
-                return _currentTemperature;
+                lock (_locker)
+                {
+                    return _currentTemperature;
+                }
             }
             set
             {
-                _currentTemperature = value;
-                _currentTemperatureUpdated = DateTime.Now;
+                lock (_locker)
+                {
+                    _currentTemperature = value;
+                    _currentTemperatureUpdated = DateTime.Now;
+                }
             }
         }
 
@@ -39,11 +47,17 @@ namespace TemperatureWatcher.Execution
         {
             get
             {
-                return _currentTemperatureUpdated;
+                lock (_locker)
+                {
+                    return _currentTemperatureUpdated;
+                }
             }
             set
             {
-                _currentTemperatureUpdated = value;
+                lock (_locker)
+                {
+                    _currentTemperatureUpdated = value;
+                }
             }
         }
         #endregion
@@ -70,20 +84,26 @@ namespace TemperatureWatcher.Execution
 
         public void UpdateSchedule(int hour, int minute, DateTime scheduleUpdated)
         {
-            _hour = hour;
-            _hourIsSet = true;
-            _minute = minute;
-            _minuteIsSet = true;
+            lock (_locker)
+            {
+                _hour = hour;
+                _hourIsSet = true;
+                _minute = minute;
+                _minuteIsSet = true;
 
-            _scheduleUpdated = scheduleUpdated;
+                _scheduleUpdated = scheduleUpdated;
+            }
 
             ResetTimer();
         }
 
         public void UpdateCurrentTemperature(float currentTemperature, DateTime currentTemperatureUpdated)
         {
-            _currentTemperature = currentTemperature;
-            _currentTemperatureUpdated = currentTemperatureUpdated;
+            lock (_locker)
+            {
+                _currentTemperature = currentTemperature;
+                _currentTemperatureUpdated = currentTemperatureUpdated;
+            }
 
             ResetTimer();
         }
@@ -92,15 +112,21 @@ namespace TemperatureWatcher.Execution
         {
             if(_currentTemperatureUpdated > DateTime.MinValue && _hourIsSet && _minuteIsSet)
             {
-                _timer.Stop();
-                _timer.Interval = GetTimeLeftToStartLevel().TotalMilliseconds;
-                _timer.Start();
+                lock (_locker)
+                {
+                    _timer.Stop();
+                    _timer.Interval = GetTimeLeftToStartLevel().TotalMilliseconds;
+                    _timer.Start();
+                }
             }
         }
 
         public void Inactivate()
         {
-            _timer.Stop();
+            lock (_locker)
+            {
+                _timer.Stop();
+            }
         }
 
         private TimeSpan GetTimeLeftToStartLevel()
@@ -130,7 +156,15 @@ namespace TemperatureWatcher.Execution
             nextStartTime = nextStartTime.AddMinutes(-currentLevel.Minutes);
             nextStartTime = nextStartTime.AddSeconds(-currentLevel.Seconds);
 
-            return nextStartTime - now;
+            TimeSpan timeLeftToStart = nextStartTime - now;
+            if (timeLeftToStart.TotalMilliseconds >= 0)
+            {
+                return nextStartTime - now;
+            }
+            else
+            {
+                return new TimeSpan(0);
+            }
         }
 
         public DateTime GetNextScheduledTime(DateTime? now = null)

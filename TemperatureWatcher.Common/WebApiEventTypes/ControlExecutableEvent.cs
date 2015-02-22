@@ -9,10 +9,12 @@ namespace TemperatureWatcher.Common.WebApiEventTypes
     public class ControlExecutableEvent : IWebApiEvent
     {
         public bool SendOnFlags { get; set; }
+        public int MinutesToKeepRunning { get; set; }
 
-        public ControlExecutableEvent(bool sendOnFlags)
+        public ControlExecutableEvent(bool sendOnFlags, int minutesToKeepRunning)
         {
             SendOnFlags = sendOnFlags;
+            MinutesToKeepRunning = minutesToKeepRunning;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace TemperatureWatcher.Execution.Workers.Factories
     {
         public static ExternalPathWorker<T> CreateExternalPathWorker<T>(IExternalPathElementContainer externalPathElement, Action<T, DateTime> onUpdateCallback)
         {
-            if (externalPathElement.FileSource != null)
+            if (externalPathElement.FileSource != null && externalPathElement.FileSource.Enabled)
             {
                 return new FileWorker<T>(
                     externalPathElement.FileSource.Path,
@@ -21,7 +21,7 @@ namespace TemperatureWatcher.Execution.Workers.Factories
                     externalPathElement.FileSource.ReadInterval.Seconds,
                     onUpdateCallback);
             }
-            else if (externalPathElement.HttpSource != null)
+            else if (externalPathElement.HttpSource != null && externalPathElement.HttpSource.Enabled)
             {
                 return new HttpWorker<T>(
                     externalPathElement.HttpSource.Path,

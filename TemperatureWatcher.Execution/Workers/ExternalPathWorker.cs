@@ -18,6 +18,7 @@ namespace TemperatureWatcher.Execution.Workers
         protected Timer _timer;
         protected Action<T, DateTime> _onUpdateCallback;
         protected T _content;
+        private bool _firstCallbackCalled;
 
         public ExternalPathWorker(string Path, string ContentMask, int hours, int minutes, int seconds, Action<T, DateTime> onUpdateCallback)
         {
@@ -25,6 +26,7 @@ namespace TemperatureWatcher.Execution.Workers
             _contentMask = new Regex(ContentMask);
             _interval = new TimeSpan(hours, minutes, seconds);
             _onUpdateCallback = onUpdateCallback;
+            _firstCallbackCalled = false;
 
             //Create and set timer
             _timer = new Timer(_interval.TotalMilliseconds);
@@ -51,13 +53,13 @@ namespace TemperatureWatcher.Execution.Workers
 
         protected void CallOnUpdateCallbackIfValueChanged(T content, DateTime contentUpdated)
         {
-            if(_content == null || !_content.Equals(content))
+            if(content != null && (!_firstCallbackCalled || (_firstCallbackCalled && !_content.Equals(content)) ))
             {
                 _onUpdateCallback(content, contentUpdated);
             }
         }
 
-        public T ConvertContent(string content)
+        protected T ConvertContent(string content)
         {
             return (T)Convert.ChangeType(content, typeof(T), CultureInfo.InvariantCulture);
         }

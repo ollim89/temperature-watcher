@@ -12,7 +12,7 @@ namespace TemperatureWatcher.Common.WebApiResponseTypes
 
         public GetExecutingStateResponse(bool isExecuting)
         {
-            isExecuting = IsExecuting;
+            IsExecuting = isExecuting;
         }
     }
 }
