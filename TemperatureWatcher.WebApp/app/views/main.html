@@ -1,0 +1,49 @@
+<h4>Status</h4>
+<div class="alert {{ isExecuting ? 'alert-success' : 'alert-danger' }}" role="alert">Motorvärmare: {{ isExecuting ? "På" : "Av" }}</div>
+<div class="alert alert-info" role="alert">Nuvarande temperature: {{ currentTemperature }} C</div>
+<h4>Ställ in avfärdstid</h4>
+<form>
+    <div class="form-group">
+        <label for="inputHour">Timme</label>
+        <input type="number" class="form-control" id="inputHour" max="23" min="0" ng-model="hour" />
+    </div>
+    <div class="form-group">
+        <label for="inputMinute">Minut</label>
+        <input type="number" class="form-control" id="inputMinute" max="59" min="0" ng-model="minute" />
+    </div>
+    <div class="form-group">
+        <input bs-switch 
+               ng-model="isActive"
+               switch-on-text="Aktiv" 
+               switch-off-text="Inaktiv"                
+               ng-true-value="true"
+               ng-false-value="false"
+               type="checkbox">
+    </div>
+    <button class="btn btn-block btn-save" ng-click="save()">Spara</button>
+</form>
+
+<h4>Starta direkt</h4>
+<button class="btn btn-block btn-instant-start" ng-click="controlExecutable(true, 0)">Starta nu</button>
+<button class="btn btn-block btn-instant-start-auto-stop" ng-click="controlExecutable(true, 30)">Starta i 30 min</button>
+<button class="btn btn-block btn-instant-start-auto-stop" ng-click="controlExecutable(true, 60)">Starta i 1 timme</button>
+<button class="btn btn-block btn-instant-start-auto-stop" ng-click="controlExecutable(true, 90)">Starta i 1 timme och 30 min</button>
+<button class="btn btn-block btn-instant-stop" ng-click="controlExecutable(false, 0)">Stäng av</button>
+
+<!-- Modal -->
+<div class="modal fade" id="messageDialog" tabindex="-1" role="dialog" aria-labelledby="messageDialogLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="messageDialogLabel">Meddelande</h4>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
