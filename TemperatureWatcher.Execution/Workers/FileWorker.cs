@@ -16,7 +16,7 @@ namespace TemperatureWatcher.Execution.Workers
             _timer.AutoReset = false;
         }
 
-        public override T GetContent(DateTime timeExecuted)
+        protected override T ExecuteWorker(DateTime timeExecuted)
         {
             T content;
             try

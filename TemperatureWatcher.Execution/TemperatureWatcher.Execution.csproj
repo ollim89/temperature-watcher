@@ -43,6 +43,11 @@
   <ItemGroup>
     <Compile Include="ExecutableHandler.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ScheduleHandler.cs" />
     <Compile Include="Workers\ExternalPathWorker.cs" />
     <Compile Include="Workers\Factories\ExternalPathWorkerFactory.cs" />
@@ -59,6 +64,13 @@
       <Project>{37cfa8fd-becb-4222-9a40-550944080ecf}</Project>
       <Name>TemperatureWatcher.Configuration</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

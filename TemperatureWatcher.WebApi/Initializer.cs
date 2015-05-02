@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace TemperatureWatcher.WebApi
         {
             ApiControllerBase.TemperatureWatcherExecutorCallback = callback;
             _settings = settings;
+            Trace.WriteLine("[TemperatureWatcher][WebApi][Initializer][Constructor] WebApi will use following url: " + _settings.WebApi.Url);
             WebApp.Start<Startup>(_settings.WebApi.Url);
         }
     }

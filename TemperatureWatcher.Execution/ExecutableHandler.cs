@@ -44,6 +44,11 @@ namespace TemperatureWatcher.Execution
         {
             lock(_locker)
             {
+                if(_isExecuting)
+                {
+                    return;
+                }
+
                 RunExecutable(true, onUntil);
             }
         }
@@ -52,6 +57,11 @@ namespace TemperatureWatcher.Execution
         {
             lock (_locker)
             {
+                if(_isExecuting)
+                {
+                    return;
+                }
+
                 RunExecutable(true);
             }
         }
@@ -60,12 +70,18 @@ namespace TemperatureWatcher.Execution
         {
             lock (_locker)
             {
+                if(!_isExecuting)
+                {
+                    return;
+                }
+
                 RunExecutable(false);
             }
         }
 
         private void RunExecutable(bool turnOn, DateTime? onUntil = null)
         {
+            Trace.WriteLine("[TemperatureWatcher][Execution][ExecutableHandler][RunExecutable] Will run executable with " + (turnOn ? "on" : "off") + " flags");
             string flags;
             if (turnOn)
             {

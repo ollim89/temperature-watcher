@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="TemperatureWatcherService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -66,7 +72,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="TemperatureWatcherClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TemperatureWatcher.Common\TemperatureWatcher.Common.csproj">
@@ -85,6 +90,14 @@
       <Project>{aed910ff-6588-4996-93a6-805fef80a1b3}</Project>
       <Name>TemperatureWatcher.WebApi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TemperatureWatcherService.resx">
+      <DependentUpon>TemperatureWatcherService.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

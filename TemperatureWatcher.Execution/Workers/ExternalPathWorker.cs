@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,18 @@ namespace TemperatureWatcher.Execution.Workers
         protected Action<T, DateTime> _onUpdateCallback;
         protected T _content;
         private bool _firstCallbackCalled;
+        private readonly object _locker = new object();
+
+        public T Content 
+        {
+            get
+            {
+                lock(_locker)
+                {
+                    return _content;
+                }
+            }
+        }
 
         public ExternalPathWorker(string Path, string ContentMask, int hours, int minutes, int seconds, Action<T, DateTime> onUpdateCallback)
         {
@@ -31,19 +44,22 @@ namespace TemperatureWatcher.Execution.Workers
             //Create and set timer
             _timer = new Timer(_interval.TotalMilliseconds);
             _timer.Elapsed += GetContentAndSetContentProperty;
-
-            //Get content first so that content propery has a value
-            this.GetContentAndSetContentProperty(this, null);
         }
 
         public void StartWorker()
         {
+            //Get content first so that content propery has a value
+            this.GetContentAndSetContentProperty(this, null);
+
             _timer.Start();
         }
 
         public void StopWorker()
         {
-            _timer.Stop();
+            if (_timer.Enabled)
+            {
+                _timer.Stop();
+            }
         }
 
         protected string GetSearchedContent(string fileContent)
@@ -55,6 +71,7 @@ namespace TemperatureWatcher.Execution.Workers
         {
             if(content != null && (!_firstCallbackCalled || (_firstCallbackCalled && !_content.Equals(content)) ))
             {
+                Trace.WriteLine("[TemperatureWatcher][Execution][Workers][ExternalPathWorker][CallOnUpdateCallbackIfValueChanged] Worker getting content from external path " + this._path + " got new value " + content);
                 _onUpdateCallback(content, contentUpdated);
             }
         }
@@ -66,6 +83,7 @@ namespace TemperatureWatcher.Execution.Workers
 
         private void GetContentAndSetContentProperty(object sender, ElapsedEventArgs e)
         {
+            Trace.WriteLine("[TemperatureWatcher][Execution][Workers][ExternalPathWorker][GetContentAndSetContentProperty] Executing worker to get content from external path: " + this._path);
             DateTime timeExecuted;
             
             if(e != null)
@@ -77,10 +95,10 @@ namespace TemperatureWatcher.Execution.Workers
                 timeExecuted = DateTime.Now;
             }
 
-            T content = this.GetContent(timeExecuted);
+            T content = this.ExecuteWorker(timeExecuted);
             _content = content;
         }
 
-        public abstract T GetContent(DateTime timeExecuted);
+        protected abstract T ExecuteWorker(DateTime timeExecuted);
     }
 }

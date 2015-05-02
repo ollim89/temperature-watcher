@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Temperature Watcher" Language="1033" Version="1.0.0.0" Manufacturer="Olli Määttänen" UpgradeCode="206a9835-3add-4988-a4fc-d2bd2b7bbdb7">
+	<Product Id="*" Codepage="1252" Name="Temperature Watcher" Language="1033" Version="1.0.0.0" Manufacturer="Olli Määttänen" UpgradeCode="206a9835-3add-4988-a4fc-d2bd2b7bbdb7">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -22,9 +22,9 @@
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
 			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
+			 <Component Id="ProductComponent">
+         <File Source="$(var.TemperatureWatcher.Service.TargetPath)" />
+			 </Component> 
 		</ComponentGroup>
 	</Fragment>
 </Wix>

@@ -14,7 +14,19 @@ namespace TemperatureWatcher.Common
 
         public static void WriteEntry(string message, EventLogEntryType type)
         {
-            EventLog.WriteEntry(_eventLogSource, message, type);
+            try
+            {
+                if (!EventLog.SourceExists(_eventLogSource))
+                {
+                    EventLog.CreateEventSource(_eventLogSource, _eventLogName);
+                }
+
+                EventLog.WriteEntry(_eventLogSource, message, type);
+            }
+            catch(Exception e)
+            {
+                Trace.WriteLine("[TemperatureWatcher][Common][Logger][WriteEntry] Error writing to eventlog: " + e.ToString());
+            }
         }
     }
 }

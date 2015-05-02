@@ -9,6 +9,7 @@ using TemperatureWatcher.WebApi;
 using TemperatureWatcher.Configuration;
 using TemperatureWatcher.Common;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace TemperatureWatcher.Service
 {
@@ -20,14 +21,45 @@ namespace TemperatureWatcher.Service
 
         protected override void OnStart(string[] args)
         {
-            _settings = (Config)ConfigurationManager.GetSection("temperatureWatcherSettings");
-            _executor = new Executor(_settings);
-            _webApi = new Initializer(_settings, _executor.ReceiveWebApiCall);
+            try
+            {
+                Trace.WriteLine("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] Getting settings");
+                _settings = (Config)ConfigurationManager.GetSection("temperatureWatcherSettings");
+
+                Trace.WriteLine("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] Initializing the service executor");
+                _executor = new Executor(_settings);
+
+                Trace.WriteLine("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] Initializing WebApi");
+                _webApi = new Initializer(_settings, _executor.ReceiveWebApiCall);
+            }
+            catch(Exception e)
+            {
+                Trace.Write("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] The service failed to start with the following error: " + e.ToString() + Environment.NewLine);
+                Logger.WriteEntry("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] The service failed to start with the following error: " + e.ToString(), EventLogEntryType.Error);
+                throw e;
+            }
         }
 
         protected override void OnStop()
         {
-            _executor.StopExecutor();
+            try
+            {
+                _executor.StopExecutor();
+            }
+            catch(Exception e)
+            {
+                Trace.Write("[TemperatureWatcher][Service][TemperatureWatcherService][OnStop] The service failed to stop safely with the following error: " + e.ToString() + Environment.NewLine);
+                Logger.WriteEntry("[TemperatureWatcher][Service][TemperatureWatcherService][OnStop] The service failed to stop safely with the following error: " + e.ToString(), EventLogEntryType.Error);
+            }
+        }
+
+        private void InitializeComponent()
+        {
+            // 
+            // TemperatureWatcherService
+            // 
+            this.ServiceName = "TemperatureWatcherService";
+
         }
 
         #region Depracted

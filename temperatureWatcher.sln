@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Service", "TemperatureWatcher.Service\TemperatureWatcher.Service.csproj", "{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "TemperatureWatcherWIXSetup", "TemperatureWatcherWIXSetup\TemperatureWatcherWIXSetup.wixproj", "{2A60DC45-74B4-4A30-B806-5215122E78DB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Configuration", "TemperatureWatcher.Configuration\TemperatureWatcher.Configuration.csproj", "{37CFA8FD-BECB-4222-9A40-550944080ECF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Execution", "TemperatureWatcher.Execution\TemperatureWatcher.Execution.csproj", "{C3287049-5EF0-40F4-8F77-ACAAA17E3318}"
@@ -14,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.WebApi", "TemperatureWatcher.WebApi\TemperatureWatcher.WebApi.csproj", "{AED910FF-6588-4996-93A6-805FEF80A1B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureWatcher.Common", "TemperatureWatcher.Common\TemperatureWatcher.Common.csproj", "{0370CA0F-7341-41CA-AE57-78E6916C7AF2}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TemperatureWatcher.ServiceSetup", "TemperatureWatcher.ServiceSetup\TemperatureWatcher.ServiceSetup.vdproj", "{6F45330C-21D9-41AA-B55A-09EA5E296345}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +35,6 @@ Global
 		{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}.Release|x86.ActiveCfg = Release|x86
 		{9DE500FE-5DD3-4C43-AA1D-FDF32B5114FB}.Release|x86.Build.0 = Release|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Debug|x86.ActiveCfg = Debug|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Debug|x86.Build.0 = Debug|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Release|Any CPU.ActiveCfg = Release|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Release|x86.ActiveCfg = Release|x86
-		{2A60DC45-74B4-4A30-B806-5215122E78DB}.Release|x86.Build.0 = Release|x86
 		{37CFA8FD-BECB-4222-9A40-550944080ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37CFA8FD-BECB-4222-9A40-550944080ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37CFA8FD-BECB-4222-9A40-550944080ECF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -83,6 +75,12 @@ Global
 		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0370CA0F-7341-41CA-AE57-78E6916C7AF2}.Release|x86.ActiveCfg = Release|Any CPU
+		{6F45330C-21D9-41AA-B55A-09EA5E296345}.Debug|Any CPU.ActiveCfg = Debug
+		{6F45330C-21D9-41AA-B55A-09EA5E296345}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{6F45330C-21D9-41AA-B55A-09EA5E296345}.Debug|x86.ActiveCfg = Debug
+		{6F45330C-21D9-41AA-B55A-09EA5E296345}.Release|Any CPU.ActiveCfg = Release
+		{6F45330C-21D9-41AA-B55A-09EA5E296345}.Release|Mixed Platforms.ActiveCfg = Release
+		{6F45330C-21D9-41AA-B55A-09EA5E296345}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

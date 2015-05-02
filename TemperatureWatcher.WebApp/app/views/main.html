@@ -5,11 +5,11 @@
 <form>
     <div class="form-group">
         <label for="inputHour">Timme</label>
-        <input type="number" class="form-control" id="inputHour" max="24" min="0" ng-model="hour" />
+        <input type="number" class="form-control" id="inputHour" max="23" min="0" ng-model="hour" />
     </div>
     <div class="form-group">
         <label for="inputMinute">Minut</label>
-        <input type="number" class="form-control" id="inputMinute" max="60" min="0" ng-model="minute" />
+        <input type="number" class="form-control" id="inputMinute" max="59" min="0" ng-model="minute" />
     </div>
     <div class="form-group">
         <input bs-switch 
@@ -29,3 +29,21 @@
 <button class="btn btn-block btn-instant-start-auto-stop" ng-click="controlExecutable(true, 60)">Starta i 1 timme</button>
 <button class="btn btn-block btn-instant-start-auto-stop" ng-click="controlExecutable(true, 90)">Starta i 1 timme och 30 min</button>
 <button class="btn btn-block btn-instant-stop" ng-click="controlExecutable(false, 0)">Stäng av</button>
+
+<!-- Modal -->
+<div class="modal fade" id="messageDialog" tabindex="-1" role="dialog" aria-labelledby="messageDialogLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="messageDialogLabel">Meddelande</h4>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
