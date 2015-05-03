@@ -16,6 +16,20 @@ namespace TemperatureWatcher.Configuration
 {
     public class Config : ConfigurationSection
     {
+        private static Config _instance;
+
+        private Config() { }
+
+        public static Config GetInstance()
+        {
+            if(_instance == null)
+            {
+                _instance = (Config)ConfigurationManager.GetSection("temperatureWatcherSettings");
+            }
+
+            return _instance;
+        }
+
         [ConfigurationProperty("timeToLeaveSource")]
         public TimeToLeave TimeToLeave
         {

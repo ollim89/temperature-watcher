@@ -10,6 +10,7 @@ using TemperatureWatcher.WebApi.Models;
 
 namespace TemperatureWatcher.WebApi.Controllers
 {
+    [AuthorizeIfAuthenticationIsUsed]
     public class ControlExecutableController : ApiControllerBase
     {
         public IHttpActionResult Post([FromBody]ExecutableControl executableControl)

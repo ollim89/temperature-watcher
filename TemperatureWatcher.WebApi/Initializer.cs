@@ -12,14 +12,11 @@ namespace TemperatureWatcher.WebApi
 {
     public class Initializer
     {
-        private Config _settings;
-
-        public Initializer(Config settings, Func<IWebApiEvent, IWebApiResponse> callback)
+        public Initializer(Func<IWebApiEvent, IWebApiResponse> callback)
         {
             ApiControllerBase.TemperatureWatcherExecutorCallback = callback;
-            _settings = settings;
-            Trace.WriteLine("[TemperatureWatcher][WebApi][Initializer][Constructor] WebApi will use following url: " + _settings.WebApi.Url);
-            WebApp.Start<Startup>(_settings.WebApi.Url);
+            Trace.WriteLine("[TemperatureWatcher][WebApi][Initializer][Constructor] WebApi will use following url: " + Config.GetInstance().WebApi.Url);
+            WebApp.Start<Startup>(Config.GetInstance().WebApi.Url);
         }
     }
 }

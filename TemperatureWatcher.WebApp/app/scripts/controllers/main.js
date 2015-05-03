@@ -8,74 +8,140 @@
  * Controller of the temperatureWatcherwebAppApp
  */
 angular.module('temperatureWatcherwebAppApp')
-  .controller('MainCtrl', function ($scope, $http, AppSettings, $interval) {
-    updateCurrentTemperature();
-    getExecutingState(false);
-    
+  .controller('MainCtrl', function ($scope, $http, AppSettings, $interval, AuthService, $location, $q) {
+    //Controls if authentication should be used when contacting the service
+    var authUsed = false;
     var interval;
-    if(!angular.isDefined(interval)) {
-        interval = $interval(function() {
-            getExecutingState(true);
-        }, 10 * 1000);
-    }
     
+    //Check if auth should be used when contacting service
+    configureAuth();
+    
+    //Initial values
     $scope.isActive = true;
-    $scope.hour = "0";
-    $scope.minute = "0";
     $scope.currentTemperature = "0.0";
     $scope.isExecuting = false;
+    $scope.hour = "00";
+    $scope.minute = "00";
+    
+    $scope.goToAuth = function() {
+        $interval.cancel(interval);
+        interval = undefined;
+        $location.path('/auth');  
+    };
 
+    //Save time to leave
     $scope.save = function() {
-        $http.post(AppSettings.apiUrl + "/SetSchedule/", {
-           Hour: $scope.hour,
-           Minute: $scope.minute,
-           ActiveState: $scope.isActive
-        }).success(function() {
-            $scope.message = "Tiden är uppdaterad";
-            $("#messageDialog").modal();
-        })
-        .error(printError);
+        getRequestHeaders().then(function(header){
+            $http.post(AppSettings.apiUrl + "/SetSchedule/", {
+               Hour: $scope.hour,
+               Minute: $scope.minute,
+               ActiveState: $scope.isActive
+            }, { headers: header }).success(function() {
+                $scope.message = "Tiden är uppdaterad";
+                $("#messageDialog").modal();
+            })
+            .error(printError);
+        });
     };
 
+    //Send requests for instant start/stop
     $scope.controlExecutable = function(sendStartSignal, minutesToKeepRunning) {
-        $http.post(AppSettings.apiUrl + "/ControlExecutable/", {
-            SendOnFlags: sendStartSignal,
-            MinutesToKeepRunning: minutesToKeepRunning
-        }).success(function(){
-            getExecutingState(true);
-        })
-        .error(printError);
+        getRequestHeaders().then(function(header){
+            $http.post(AppSettings.apiUrl + "/ControlExecutable/", {
+                SendOnFlags: sendStartSignal,
+                MinutesToKeepRunning: minutesToKeepRunning
+            }, { headers: header }).success(function(){
+                getExecutingState(true);
+            })
+            .error(printError);
+        });
     };
     
-    $scope.$watchGroup(["hour","minute"], function(newValues, oldValues, scope) {
-       for(var i = 0; i < newValues.length; i++) {
-           if(intval(newValues[i].toString()) < 10) {
-               newValues[i] = '0' + newValues[i];
-           }
-       } 
-    });
+    //Gets the auth settings of the service
+    function configureAuth() {
+        $http.get(AppSettings.apiUrl + "/AuthUsed/")
+            .success(function(result) {
+                if(result == true) {        
+                    authUsed = true;
+                    $("#auth-button-container").show();
+            
+                    AuthService.getUser().then(function(user) {
+                        //Do nothing, every thing is configured properly
+                    }, function() {
+                       $interval.cancel(interval);
+                       interval = undefined;
+                       $location.path('/auth');
+                       return;
+                    });
+                }
+        
+                init();
+            })
+            .error(printError);
+    };
     
+    //Initializes values
+    function init() {
+        //Get status from service
+        updateCurrentTemperature();
+        getExecutingState(false);
+
+        //Set interval to get status every 10 seconds
+        if(!angular.isDefined(interval)) {
+            interval = $interval(function() {
+                getExecutingState(true);
+            }, 10 * 1000);
+        }
+    };
+    
+    //Helper to print errors in message dialog
     function printError(data, status) {
-        $scope.message = "Ett fel uppstod, felmeddelande: " + data;
+        $scope.message = "Ett fel uppstod, felmeddelande: " + data.message;
         $("#messageDialog").modal();
     };
     
+    //Gets the current temperature
     function updateCurrentTemperature() {
-        $http.get(AppSettings.apiUrl + "/GetCurrentTemperature/")
+        getRequestHeaders().then(function(header){
+            $http.get(AppSettings.apiUrl + "/GetCurrentTemperature/", { headers: header })
             .success(function(data) {
                 $scope.currentTemperature = data.temperature;
-            });
+            }); 
+        });
     };
     
+    //Gets execution status
     function getExecutingState(onlyUpdateExecution) {
-        $http.get(AppSettings.apiUrl + "/GetExecutingState/")
-            .success(function(data) {
-                $scope.isExecuting = data.isExecuting;
-                if(!onlyUpdateExecution) {
-                    $scope.hour = data.hour;
-                    $scope.minute = data.minute;
-                    $scope.isActive = data.isActive;
-                }
-            });
+        getRequestHeaders().then(function(header){
+            $http.get(AppSettings.apiUrl + "/GetExecutingState/", { headers: header })
+                .success(function(data) {
+                    $scope.isExecuting = data.isExecuting;
+                    if(!onlyUpdateExecution) {
+                        $scope.hour = data.hour;
+                        $scope.minute = data.minute;
+                        $scope.isActive = data.isActive;
+                    }
+                });
+        });
     };
+    
+    function getRequestHeaders() {
+        var deferred = $q.defer();
+        
+        if(authUsed) {
+            AuthService.getUser().then(function(user) {
+                deferred.resolve({
+                   Authorization: 'Bearer ' + user.token.token 
+                });
+            }, function() {
+                $location.path('/auth');
+                deferred.reject();
+            });
+        }
+        else {
+            deferred.resolve({});
+        }
+        
+        return deferred.promise;
+    }
   });

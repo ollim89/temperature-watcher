@@ -25,8 +25,14 @@ namespace TemperatureWatcher.Execution
         private float _currentTemperature;
         private DateTime _currentTemperatureUpdated;
         private bool _onlyUseWebApiToUpdateSchedule;
+        private bool _isTurnedOffPrematurely;
 
         #region Properties
+        public bool IsTurnedOffPrematurely
+        {
+            get { return _isTurnedOffPrematurely; }
+            set { _isTurnedOffPrematurely = value; }
+        }
         public float CurrentTemperature
         {
             get
@@ -88,6 +94,7 @@ namespace TemperatureWatcher.Execution
             _minuteIsSet = false;
             _currentTemperatureUpdated = DateTime.MinValue;
             _onlyUseWebApiToUpdateSchedule = onlyUseWebApiToUpdateSchedule;
+            _isTurnedOffPrematurely = false;
 
             if(_onlyUseWebApiToUpdateSchedule)
             {
@@ -119,6 +126,7 @@ namespace TemperatureWatcher.Execution
         {
             lock (_locker)
             {
+                _isTurnedOffPrematurely = false;
                 _hour = hour;
                 _hourIsSet = true;
                 _minute = minute;
@@ -147,14 +155,14 @@ namespace TemperatureWatcher.Execution
             ResetTimer();
         }
 
-        public void ResetTimer(bool isTurnedOffPrematurely = false)
+        public void ResetTimer()
         {
             if(_currentTemperatureUpdated > DateTime.MinValue && _hourIsSet && _minuteIsSet)
             {
                 lock (_locker)
                 {
                     _timer.Stop();
-                    _timer.Interval = GetTimeLeftToStartLevel(isTurnedOffPrematurely).TotalMilliseconds;
+                    _timer.Interval = GetTimeLeftToStartLevel().TotalMilliseconds;
                     Trace.WriteLine("[TemperatureWatcher][Execution][ScheduleHandler][ResetTimer] The timer has a new value, executable will run in " + _timer.Interval + " milliseconds");
                     _timer.Start();
                 }
@@ -186,7 +194,7 @@ namespace TemperatureWatcher.Execution
             Properties.Settings.Default.Save();
         }
 
-        private TimeSpan GetTimeLeftToStartLevel(bool isTurnedOffPrematurely)
+        private TimeSpan GetTimeLeftToStartLevel()
         {
             lock (_locker)
             {
@@ -206,7 +214,7 @@ namespace TemperatureWatcher.Execution
 
                 //Set now to a variable so that it does not change inside the method
                 DateTime now = DateTime.Now;
-                if(isTurnedOffPrematurely)
+                if(_isTurnedOffPrematurely)
                 {
                     //Reset to 00:00
                     now = now.AddHours(-now.Hour);

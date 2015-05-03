@@ -9,6 +9,7 @@ using TemperatureWatcher.Common.WebApiResponseTypes;
 
 namespace TemperatureWatcher.WebApi.Controllers
 {
+    [AuthorizeIfAuthenticationIsUsed]
     public class GetExecutingStateController : ApiControllerBase
     {
         public IHttpActionResult Get()

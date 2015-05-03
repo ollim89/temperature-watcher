@@ -9,6 +9,7 @@ using TemperatureWatcher.WebApi.Models;
 
 namespace TemperatureWatcher.WebApi.Controllers
 {
+    [AuthorizeIfAuthenticationIsUsed]
     public class SetScheduleController : ApiControllerBase
     {
         public IHttpActionResult Post([FromBody]Schedule schedule)

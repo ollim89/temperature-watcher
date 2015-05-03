@@ -27,38 +27,35 @@ namespace TemperatureWatcher.Execution
         #endregion
 
         #region Properties
-        public static Config Settings;
         #endregion
 
         #region Constructors/Destructors
-        public Executor(Config settings)
+        public Executor()
         {
-            //Get settings
-            Settings = settings;
-
+            Config settings = Config.GetInstance();
             //Create executable handler
             Trace.WriteLine("[TemperatureWatcher][Execution][Executor][Constructor] Initializing executable handler");
-            _executableHandler = new ExecutableHandler(Settings.Execution, OnExecutableEndTime);
+            _executableHandler = new ExecutableHandler(settings.Execution, OnExecutableEndTime);
 
             //Affects the schedule handler
             bool onlyUseWebApiToUpdateSchedule = true;
 
             //Create schedule worker if polling type of source
-            if ((Settings.TimeToLeave.HttpSource != null && Settings.TimeToLeave.HttpSource.Enabled) || 
-                (Settings.TimeToLeave.FileSource != null && Settings.TimeToLeave.FileSource.Enabled))
+            if ((settings.TimeToLeave.HttpSource != null && settings.TimeToLeave.HttpSource.Enabled) || 
+                (settings.TimeToLeave.FileSource != null && settings.TimeToLeave.FileSource.Enabled))
             {
                 Trace.WriteLine("[TemperatureWatcher][Execution][Executor][Constructor] Getting time to leave by polling external source, initializing worker to poll external source");
-                _scheduleWorker = ExternalPathWorkerFactory.CreateExternalPathWorker<string>(Settings.TimeToLeave, OnScheduleUpdate);
+                _scheduleWorker = ExternalPathWorkerFactory.CreateExternalPathWorker<string>(settings.TimeToLeave, OnScheduleUpdate);
                 onlyUseWebApiToUpdateSchedule = false;
             }
 
             //Create schedule handler
             Trace.WriteLine("[TemperatureWatcher][Execution][Executor][Constructor] Initializing schedule handler");
-            _scheduleHandler = new ScheduleHandler(settings.StartLevels, OnScheduledExecutionTime, onlyUseWebApiToUpdateSchedule);
+            _scheduleHandler = new ScheduleHandler(Config.GetInstance().StartLevels, OnScheduledExecutionTime, onlyUseWebApiToUpdateSchedule);
 
             //Set worker to get current temperature according to settings
             Trace.WriteLine("[TemperatureWatcher][Execution][Executor][Constructor] Initializing worker to poll external source for current temperature");
-            _currentTemperatureWorker = ExternalPathWorkerFactory.CreateExternalPathWorker<float>(Settings.Temperature, OnCurrentTemperatureUpdate);
+            _currentTemperatureWorker = ExternalPathWorkerFactory.CreateExternalPathWorker<float>(settings.Temperature, OnCurrentTemperatureUpdate);
 
             //Start workers
             Trace.WriteLine("[TemperatureWatcher][Execution][Executor][Constructor] Start worker to get current temperature from external source");
@@ -105,9 +102,9 @@ namespace TemperatureWatcher.Execution
                 lock (_locker)
                 {
                     //Update the file source if using file
-                    if (Settings.TimeToLeave.FileSource.Enabled)
+                    if (Config.GetInstance().TimeToLeave.FileSource.Enabled)
                     {
-                        using (StreamWriter sw = new StreamWriter(Executor.Settings.TimeToLeave.FileSource.Path, false))
+                        using (StreamWriter sw = new StreamWriter(Config.GetInstance().TimeToLeave.FileSource.Path, false))
                         {
                             sw.WriteLine(string.Format("{0}:{1};{2}", scheduleEvent.Hour, scheduleEvent.Minute, scheduleEvent.IsActive.ToString().ToLower()));
                         }
@@ -134,7 +131,8 @@ namespace TemperatureWatcher.Execution
                 else
                 {
                     _executableHandler.TurnOffExecutable();
-                    _scheduleHandler.ResetTimer(true);
+                    _scheduleHandler.IsTurnedOffPrematurely = true;
+                    _scheduleHandler.ResetTimer();
                 }
             }
             //Get the current temperature
@@ -186,6 +184,7 @@ namespace TemperatureWatcher.Execution
         {
             if (!_executableHandler.IsExecuting)
             {
+                _scheduleHandler.IsTurnedOffPrematurely = false;
                 _executableHandler.TurnOnExecutable(_scheduleHandler.GetNextScheduledTime(null, false));
             }
         }

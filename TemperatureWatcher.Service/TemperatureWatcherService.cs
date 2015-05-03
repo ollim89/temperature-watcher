@@ -15,7 +15,6 @@ namespace TemperatureWatcher.Service
 {
     class TemperatureWatcherService : ServiceBase
     {
-        Config _settings; 
         Executor _executor;
         Initializer _webApi;
 
@@ -23,14 +22,15 @@ namespace TemperatureWatcher.Service
         {
             try
             {
-                Trace.WriteLine("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] Getting settings");
-                _settings = (Config)ConfigurationManager.GetSection("temperatureWatcherSettings");
+                Trace.WriteLine("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] Initializing settings");
+                //Call GetInstance to make sure we catch any configuration settings right away (when the singleton is getting instantiated)
+                Config.GetInstance();
 
                 Trace.WriteLine("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] Initializing the service executor");
-                _executor = new Executor(_settings);
+                _executor = new Executor();
 
                 Trace.WriteLine("[TemperatureWatcher][Service][TemperatureWatcherService][OnStart] Initializing WebApi");
-                _webApi = new Initializer(_settings, _executor.ReceiveWebApiCall);
+                _webApi = new Initializer(_executor.ReceiveWebApiCall);
             }
             catch(Exception e)
             {

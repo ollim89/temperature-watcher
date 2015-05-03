@@ -21,5 +21,44 @@ namespace TemperatureWatcher.Configuration.WebApiSection
                 this["string"] = value;
             }
         }
+
+        [ConfigurationProperty("useAuth")]
+        public bool UseAuth
+        {
+            get
+            {
+                return (bool)this["useAuth"];
+            }
+            set
+            {
+                this["useAuth"] = value;
+            }
+        }
+
+        [ConfigurationProperty("username")]
+        public string Username
+        {
+            get
+            {
+                return (string)this["username"];
+            }
+            set
+            {
+                this["username"] = value;
+            }
+        }
+
+        [ConfigurationProperty("password")]
+        public string Password
+        {
+            get
+            {
+                return (string)this["password"];
+            }
+            set
+            {
+                this["password"] = value;
+            }
+        }
     }
 }
