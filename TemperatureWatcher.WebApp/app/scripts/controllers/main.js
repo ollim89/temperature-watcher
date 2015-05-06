@@ -22,6 +22,12 @@ angular.module('temperatureWatcherwebAppApp')
     $scope.isExecuting = false;
     $scope.hour = "00";
     $scope.minute = "00";
+    $scope.currentStartLevel = {
+        hour: 0,
+        minute: 0,
+        second: 0,
+        temperature: 0.0
+    }
     
     $scope.goToAuth = function() {
         $interval.cancel(interval);
@@ -116,6 +122,26 @@ angular.module('temperatureWatcherwebAppApp')
             $http.get(AppSettings.apiUrl + "/GetExecutingState/", { headers: header })
                 .success(function(data) {
                     $scope.isExecuting = data.isExecuting;
+                     
+                    if($scope.isActive) {
+                        if(data.currentStartLevel != null) {
+                            $scope.currentStartLevel.hour = data.currentStartLevel.hour;
+                            $scope.currentStartLevel.minute = data.currentStartLevel.minute;
+                            $scope.currentStartLevel.second = data.currentStartLevel.second;
+                            $scope.currentStartLevel.temperature = data.currentStartLevel.temperature;
+                            $("#hasStartLevelText").show();
+                            $("#noStartLevelText").hide();
+                        }
+                        else {
+                            $("#hasStartLevelText").hide();
+                            $("#noStartLevelText").show();
+                        }
+                    }
+                    else {
+                            $("#hasStartLevelText").hide();
+                            $("#noStartLevelText").hide();
+                    }
+                    
                     if(!onlyUpdateExecution) {
                         $scope.hour = data.hour;
                         $scope.minute = data.minute;

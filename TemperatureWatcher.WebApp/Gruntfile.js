@@ -289,15 +289,15 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
+//     uglify: {
+//       dist: {
+//         files: {
+//           '<%= yeoman.dist %>/scripts/scripts.js': [
+//             '<%= yeoman.dist %>/scripts/scripts.js'
+//           ]
+//         }
+//       }
+//     },
     // concat: {
     //   dist: {}
     // },
@@ -376,7 +376,8 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'appsettings.js'
           ]
         }, {
           expand: true,

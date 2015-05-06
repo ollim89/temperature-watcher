@@ -1,6 +1,12 @@
 <h4>Status</h4>
 <div class="alert {{ isExecuting ? 'alert-success' : 'alert-danger' }}" role="alert">Motorvärmare: {{ isExecuting ? "På" : "Av" }}</div>
-<div class="alert alert-info" role="alert">Nuvarande temperature: {{ currentTemperature }} C</div>
+<div class="alert alert-info" role="alert">
+    Nuvarande temperature: {{ currentTemperature }} C <br />
+    <em>
+        <span id="hasStartLevelText">Startar {{ currentStartLevel.hour }} timmar {{ currentStartLevel.minute }} minuter {{ currentStartLevel.second }} sekunder före inställd avfärdstid</span>
+        <span id="noStartLevelText">Startar ej vid inställd avfärdstid, nuvarande temperatur är högre än högsta starttemperaturen</span>
+    </em>
+</div>
 <h4>Ställ in avfärdstid</h4>
 <form>
     <!--div class="form-group">

@@ -9,6 +9,7 @@ using TemperatureWatcher.Common;
 using TemperatureWatcher.Common.WebApiEventTypes;
 using TemperatureWatcher.Common.WebApiResponseTypes;
 using TemperatureWatcher.Configuration;
+using TemperatureWatcher.Configuration.StartLevelsSection;
 using TemperatureWatcher.Configuration.TimeToLeaveSection;
 using TemperatureWatcher.Execution;
 using TemperatureWatcher.Execution.Workers;
@@ -80,11 +81,25 @@ namespace TemperatureWatcher.Execution
             //Gets the executing status
             if(typeof(GetExecutingStateEvent) == request.GetType())
             {
+                StartLevel startLevel = _scheduleHandler.GetCurrentStartLevel();
+                GetExecutingStateResponse.StartLevel currentStartLevel = null;
+                if(startLevel != null)
+                {
+                    currentStartLevel = new GetExecutingStateResponse.StartLevel
+                    {
+                        Hour = startLevel.Hours,
+                        Minute = startLevel.Minutes,
+                        Second = startLevel.Seconds,
+                        Temperature = startLevel.Temperature
+                    };
+                }
                 return new GetExecutingStateResponse(
-                    _executableHandler.IsExecuting, 
+                    _executableHandler.IsExecuting,
                     _scheduleHandler.Hour,
                     _scheduleHandler.Minute,
-                    _scheduleHandler.IsActive);
+                    _scheduleHandler.IsActive,
+                    currentStartLevel
+                    );
             }
             //Update schedule
             else if(typeof(SetScheduleEvent) == request.GetType())
@@ -131,8 +146,7 @@ namespace TemperatureWatcher.Execution
                 else
                 {
                     _executableHandler.TurnOffExecutable();
-                    _scheduleHandler.IsTurnedOffPrematurely = true;
-                    _scheduleHandler.ResetTimer();
+                    _scheduleHandler.OnEndOfExecution();
                 }
             }
             //Get the current temperature
@@ -184,15 +198,14 @@ namespace TemperatureWatcher.Execution
         {
             if (!_executableHandler.IsExecuting)
             {
-                _scheduleHandler.IsTurnedOffPrematurely = false;
-                _executableHandler.TurnOnExecutable(_scheduleHandler.GetNextScheduledTime(null, false));
+                _executableHandler.TurnOnExecutable(_scheduleHandler.GetNextScheduledTime(DateTime.Now, false));
             }
         }
 
         public void OnExecutableEndTime(object sender, ElapsedEventArgs e)
         {
             _executableHandler.TurnOffExecutable();
-            _scheduleHandler.ResetTimer();
+            _scheduleHandler.OnEndOfExecution();
         }
         #endregion
 

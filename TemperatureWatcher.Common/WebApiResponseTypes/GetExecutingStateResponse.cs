@@ -12,13 +12,23 @@ namespace TemperatureWatcher.Common.WebApiResponseTypes
         public int Hour { get; set; }
         public int Minute { get; set; }
         public bool IsActive { get; set; }
+        public StartLevel CurrentStartLevel { get; set; }
 
-        public GetExecutingStateResponse(bool isExecuting, int hour, int minute, bool isActive)
+        public GetExecutingStateResponse(bool isExecuting, int hour, int minute, bool isActive, StartLevel currentStartLevel)
         {
             IsExecuting = isExecuting;
             Hour = hour;
             Minute = minute;
             IsActive = isActive;
+            CurrentStartLevel = currentStartLevel;
+        }
+
+        public class StartLevel
+        {
+            public int Hour { get; set; }
+            public int Minute { get; set; }
+            public int Second { get; set; }
+            public float Temperature { get; set; }
         }
     }
 }
